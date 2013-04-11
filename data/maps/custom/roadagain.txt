@@ -1,0 +1,8 @@
+map_name=Road Again
+checkpts=16
+player1x=70
+player1y=245
+player1r=90
+player2x=130
+player2y=240
+player2r=90

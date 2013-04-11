@@ -1,0 +1,10 @@
+map_name=Height Fingers
+checkpts=56
+best_lap=640
+gold_lap=537
+player1x=534
+player1y=207
+player1r=270.0
+player2x=570
+player2y=217
+player2r=270.0

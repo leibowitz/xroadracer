@@ -1,0 +1,62 @@
+!!!NOT-UPDATED!!
+
+(0.1) Firt Version Milestone : To be implemented/fixed, in preference order.
+
+_ Implement the physics.(TODO)
+	When two cars overlap, it should be considered as an hit. Depending on 
+	the both cars rotating axes and speed, it should react properly.(Basic collision reaction implemented, thanks to the code from Andrew @ Trophy.sf.net) 
+	
+_ Better Artifical Intelligence.(TODO)
+	It should not break when it can accelerate without crossing the line.
+	Should learn by driving. In most cases this is a per map basis. 
+	
+_ Modify some code to get a clean image rotating engine.(DONE)
+	The car is only one bitmap that is rotated by the sge_transform. This 
+	doesn't keep the alpha channel and thus break the transparency. So a 
+	new function is called, clear_background to get rid of the light blue 
+	color that represent the transparency on the car bitmap. (Fixed)
+	When two cars are running, this is dumb and makes poor results. (Fixed)
+
+_ Add the sound engine to the game.(NOTHING DONE)
+	This will be an huge contribution. I don't know exactly how to do this. 
+	All I know is the theory of a car engine sound in game. You take a 
+	basic "vroom" at constant speed, and then you pitch up/down the 
+	sound to get an acceleration/deceleration.
+
+_ Draw tires burnout.(TODO)
+	When accelerating or when the player is turning heavily (at high speed)
+	there should be black lines on the road staying ten or more seconds. 
+	
+_ Implement the race code as a module.(TODO)
+	There should be many race type. So it will be better to clean up the 
+	code and to seperate the race code from the rest. Thus making the 
+	creation of new race type easier.
+	
+_ Create a menu and implement everything needed (basic implementation done).
+	Before starting the race, the player should choose what race type he 
+	want to play.
+	In the menu = 
+		. switch between fullscreen / windowed mode (use 'F' key) 
+			-> new implementation to be done
+		. change the resolution (640x480, 800x600, 1024x768) -> TODO
+		. change the bitmap (8,16,24) -> TODO
+		. set the keys or joystick controls -> (started)
+		. choose the race type -> code (TODO)
+			| arcade
+			| cup
+			| career
+ 
+_ Implement in-game multilanguage support (TODO)
+	Every text displayed in game, or in the menu should be i18n.
+
+_ Creations list / NOT CODE RELATED /
+	° Create more maps, test them, makes them work with the AI.
+		-> map editor almost finished. This will speed up the creation of 
+		new races
+	° Draw more cars.
+		-> Michael is already working on this.
+	° Show on the website a complete "map making" from the map_creating.xcf
+		-> see the documentation.odt and the web directory.
+	° Provide a special download for the Map Developement Kit.
+		-> this will only be necessary for advanced contributors, 
+		because a basic implementation of the map editing is being done.

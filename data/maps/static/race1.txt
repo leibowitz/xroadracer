@@ -1,0 +1,8 @@
+map_name=Race1
+checkpts=64
+player1x=122
+player1y=162
+player1r=90
+player2x=74
+player2y=161
+player2r=90

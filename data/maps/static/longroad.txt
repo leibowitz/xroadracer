@@ -1,0 +1,10 @@
+map_name=Long Road
+checkpts=56
+best_lap=999
+gold_lap=970
+player1x=369
+player1y=73
+player1r=180
+player2x=394
+player2y=40
+player2r=180

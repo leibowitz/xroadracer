@@ -1,0 +1,10 @@
+map_name=Way Choice
+checkpts=56
+best_lap=504
+gold_lap=426
+player1x=332.0
+player1y=38.0
+player1r=180.0
+player2x=362.0
+player2y=78.0
+player2r=180.0

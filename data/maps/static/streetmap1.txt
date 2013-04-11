@@ -1,0 +1,8 @@
+map_name=Street Map N1
+checkpts=16
+player1x=211
+player1y=328
+player1r=270
+player2x=159
+player2y=337
+player2r=270

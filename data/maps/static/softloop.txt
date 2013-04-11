@@ -1,0 +1,10 @@
+map_name=Soft Loop
+checkpts=64
+best_lap=750
+gold_lap=619
+player1x=255.0
+player1y=160.0
+player1r=290.0
+player2x=302.0
+player2y=180.0
+player2r=290.0

@@ -1,0 +1,8 @@
+map_name=Urban N1
+checkpts=64
+player1x=346
+player1y=550
+player1r=0
+player2x=346
+player2y=592
+player2r=0

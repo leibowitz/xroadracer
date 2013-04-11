@@ -1,0 +1,8 @@
+map_name=Pro n1
+checkpts=64
+player1x=118
+player1y=376
+player1r=73
+player2x=201
+player2y=364
+player2r=73

@@ -1,0 +1,8 @@
+map_name=Road N1
+checkpts=80
+player1x=816
+player1y=826
+player1r=270
+player2x=773
+player2y=817
+player2r=270

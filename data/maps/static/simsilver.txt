@@ -1,0 +1,13 @@
+map_name=Simulation Silver
+checkpts=64
+best_lap=922
+gold_lap=843
+object_x=86.0
+object_y=124.0
+rotation=120.0
+player1x=86.0
+player1y=124.0
+player1r=120.0
+player2x=136.0
+player2y=120.0
+player2r=120.0

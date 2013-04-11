@@ -1,0 +1,4 @@
+checkpts=64
+player1x=86.0
+player1y=124.0
+player1r=120.0

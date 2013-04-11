@@ -1,0 +1,154 @@
+!!NOT UP-TO-DATE!!
+
+-----------------
+ X Road Racer
+-----------------
+
+Projet de developpement d'un jeu pour Linux, 
+utilisant la libraire SDL.
+
+---------------------
+1 ) Comment Installer
+---------------------
+
+Dépendances requises pour compiler, sous Ubuntu : 
+
+sudo apt-get install build-essential libsdl1.2-dev libsdl-image1.2-dev 
+sudo apt-get install libsdl-ttf2.0-dev libsdl-sge-dev
+
+a- Compilation
+
+cd src
+make
+
+b- Pour jouer
+
+cd src
+./Xroadracer.bin
+
+ou 
+
+./xracing.sh 
+
+c- Pour créer une nouvelle carte
+
+cd src
+./zEditor.bin
+
+Note: Il faut absolument être dans le dossier source pour 
+lancer l'éditeur et le jeu car tous les chemins d'accès 
+sont encodés en relatifs dans le code.
+
+C'est pourquoi les deux scripts xrr.sh et editor.sh ont 
+été créés et placés dans le répertoire principal. 
+De préférence utilisez-les. 
+
+-----------------
+2 ) Comment jouer
+-----------------
+
+Utiliser les flèches directionelles pour guider la voiture.
+Lorsque le jeu se lance, il faut attendre le décompte avant 
+de pouvoir faire bouger la voiture.
+
+P : Activer/Désactiver la pause. 
+	Lorsqu'une petite faim se fait sentir en plein milieu d'une course.
+
+A : Activer/Désactiver le mode déboguage pour la conduite automatique.
+	C'est un mode utilsé pour créer des concurrents pilotés par l'ordinateur 
+	ou bien pour tester de nouvelles cartes. De cette manière il est possible 
+	de voir où regarde l'ordinateur lorsqu'il pilote la voiture.
+
+ESC : Quitter la partie.
+
+-----------------
+3 ) Remerciements
+-----------------	
+
+- Patrick Kooman pour son code de fading utilisant l'alphablending. Très astucieux, et facile. 
+http://www.2dgame-tutorial.com/
+
+- Les développeurs de la libsdl pour leur magnifique travail. Sans eux les jeux 
+sous linux n'existeraient même pas. 
+http://www.libsdl.org/credits.php
+
+- Tous les projets attachés à la libsdl, tel que SDL_TTF, SDL_IMG, ...
+http://sdl-draw.sourceforge.net/
+http://tamale.net/SDL_anim/
+http://www.ferzkopp.net/joomla/content/view/19/14/
+http://icculus.org/SDL_sound/
+http://jcatki.no-ip.org/SDL_ttf/
+http://www.libsdl.org/libraries.php?order=name&category=12&completed=0&os=1&match_name=&perpage=50
+
+- Les auteurs de SDL SGE, pour l'énorme module très utile à la détection 
+des collisions et pour la rotation des images.
+http://www.etek.chalmers.se/~e8cal1/sge/index.html
+
+- Icculus pour toutes leurs contributions
+http://www.icculus.org/ 
+
+- Le créateur des fonctions getpixel et putpixel dans la documentation 
+de SDL. Ces bouts de codes sont à l'origine de la première version du jeu.
+
+- Tous les auteurs des nombreux tutoriaux sur la lib SDL qui sont présentés 
+sur internet. Ils ont été la clef de la création de ce jeu. 
+http://gpwiki.org/index.php/C:How_to_set_up_your_SDL_Build_Environment
+http://www.linuxdevcenter.com/pub/a/linux/2005/12/15/clone-pong-using-sdl.html
+http://www.gamedev.net/reference/programming/features/sdl1/
+http://linux.omnipotent.net/article.php?article_id=12443
+http://www.gamedev.net/reference/articles/article1092.asp
+-  (en francais)
+http://www.gnurou.org/writing/linuxmag/sdl
+http://www.megastep.org/SDL/
+http://www.siteduzero.com/tuto-3-8-0-apprenez-a-programmer-en-c.html#part_1544
+
+- Particulièrement Linuxdevcenter
+http://www.linuxdevcenter.com/topics/linux/games
+
+- Les auteurs de OSDL pour leurs recherches et leurs connaissances inimaginables
+http://osdl.sourceforge.net/OSDL/OSDL-0.3/src/doc/web/main/OSDL.html
+
+- Les auteurs de SDL.NET, pour leur savoir
+http://cs-sdl.sourceforge.net/index.php/Main_Page
+
+- Christophe Faivre Duboz pour son document sur les intersections d'objets
+http://www.iag.asso.fr/articles/intersection.htm
+
+- Les auteurs de la documentation officielle de la libsdl
+http://www.libsdl.org/cgi/docwiki.cgi/SDL_20API
+- et aussi les créateurs de cette documentation résumée en quelques tutoriaux, 
+en francais.
+http://www.libsdl.org/intro.fr/tocfr.html
+
+- Les auteurs des codes open-source disponible pour tout un tas de fonctionnalités supplémentaires dont voici quelques exemples
+http://www.linux-games.com/sfont/
+http://sdlcontrols.sourceforge.net/
+
+- David M. Bourg pour ses diverses explications au sujet des physiques au sein 
+des jeux vidéos. Et notamment pour son fabuleux livre "Physics for game developers - Enriching game content with Physics-based realism". O'Reilly.
+
+- Google pour son moteur de recherche.
+
+Remerciements particuliers à:
+____________________________
+
+- Cedric (TFTIC) pour ses encouragements dans les premières versions du jeu, 
+ainsi que ses conseils et son aide pour le fichier .pro! J'aurai probablement 
+encore besoin de tes services car j'ai pas encore compris comment ca marche :-)
+ 
+- Chris pour son emballement général et sa bonne humeur :-) Et aussi merci à sa concubine pour les nombreuses fois où elle a préparé a manger !
+
+- Michael pour ses dessins, et son accueil chaleureux :-) Les amis de mes amis sont aussi mes amis.
+
+- Manu pour ses conseils et les longues discussions d'hiver, et aussi sa copine, laetizia pour les pâtes, et l'accueil :-) Miam miam.
+
+- Un grand merci a mon cousin pour toutes les idées qui trottent dans sa tête et pour sa contribution à faire de ce jeu un excellent ptit jeu !
+
+- Mes parents pour m'avoir supporté tout le temps pendant la création du jeu. 
+
+- Oussama, merci pour avoir toujours été là quand il faut, et pour ses nombreux conseils de tous les jours.
+
+- et aussi merci à tout ceux que j'oublie pour m'avoir écouté parler pendant des heures sans broncher.
+______________
+|Merci à tous|
+°°°°°°°°°°°°°°

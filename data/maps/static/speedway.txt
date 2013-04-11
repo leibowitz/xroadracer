@@ -1,0 +1,10 @@
+map_name=Speedway Fuzzy
+checkpts=64
+best_lap=625
+gold_lap=512
+player1x=358.0
+player1y=87.0
+player1r=180.0
+player2x=365.0
+player2y=117.0
+player1r=180.0

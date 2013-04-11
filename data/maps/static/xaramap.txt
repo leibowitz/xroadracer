@@ -1,0 +1,8 @@
+map_name=Xara Map
+checkpts=48
+player1x=115.0
+player1y=124.0
+player1r=92.0
+player2x=146.0
+player2y=120.0
+player2r=92.0

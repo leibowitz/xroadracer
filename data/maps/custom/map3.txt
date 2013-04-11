@@ -1,0 +1,10 @@
+map_name=Custom Map 3
+checkpts=104
+best_lap=922
+gold_lap=843
+player1x=75.0
+player1y=290.0
+player1r=90.0
+player2x=105.0
+player2y=285.0
+player2r=90.0

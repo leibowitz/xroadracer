@@ -1,0 +1,8 @@
+map_name=Map Designed Nb1
+checkpts=48
+player1x=268
+player1y=562
+player1r=0
+player2x=238
+player2y=622
+player2r=0

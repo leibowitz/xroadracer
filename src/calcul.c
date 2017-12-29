@@ -235,3 +235,67 @@ struct points * minkowski_difference(struct points *p1, struct points *p2) {
         return list;
 }
 
+void mk_minimum_displacement(struct points *p, float *rx, float *ry)
+{
+        struct points *n = p;
+        struct points *tmp = p;
+        float smallest_v = FLT_MAX;
+        float v = 0;
+        float x = 0, y = 0;
+        int i = 0;
+
+        while(tmp != NULL) {
+                i++;
+                if (tmp->next == NULL) {
+                        if (tmp == p) {
+                                break;
+                        }
+                        n = p;
+                } else {
+                        n = tmp->next;
+                }
+
+                get_point_on_segment(tmp, n, &x, &y);
+                v = hypotf(x, y);
+
+                if (smallest_v > v) {
+                        smallest_v = v;
+                        *rx = x;
+                        *ry = y;
+                }
+
+                tmp = tmp->next;
+        }
+}
+
+int find_displacement(struct cars *car1, struct cars *car2, float *rx, float *ry)
+{
+        if (car1 == NULL || car2 == NULL || car1 == car2) {
+                return -1;
+        }
+
+        float x, y, w, h;
+        x = car1->my_car.car_x - (car1->my_car.car->w/2) - (car2->my_car.car_x + (car2->my_car.car->w/2));
+        y = car1->my_car.car_y - (car1->my_car.car->h/2) - (car2->my_car.car_y + (car2->my_car.car->h/2));
+        w = car1->my_car.car->w + car2->my_car.car->w;
+        h = car1->my_car.car->h + car2->my_car.car->h;
+        
+        struct points *p1 = NULL;
+        struct points *p2 = NULL;
+        p1 = get_coords(&car1->my_car);
+        p2 = get_coords(&car2->my_car);
+        struct points *diff = NULL;
+        diff = minkowski_difference(p1, p2);
+        
+        struct points *hull = NULL;
+        hull = convex_hull(diff);
+
+        mk_minimum_displacement(hull, rx, ry);
+
+        free_points(&p1);
+        free_points(&p2);
+        free_points(&diff);
+        free_points(&hull);
+        
+        return 0;
+}

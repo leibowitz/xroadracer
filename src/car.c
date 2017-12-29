@@ -4,6 +4,7 @@
 
 #include "struct_car.h"
 #include "collision.h"
+#include "calcul.h"
 #include "car_move.h"
 
 #define MAXIMUM_EDGE_HIT_SPEED 2
@@ -272,6 +273,21 @@ void carCollision (
 	double dplX, dplY;*/
 
 	float ang;
+
+	if(car1 == NULL || car2 == NULL)
+	{
+		return;
+	}
+
+	float rx = 0, ry = 0;
+	if( find_displacement(car1, car2, &rx, &ry) == 0) {
+		car1->my_car.car_x -= rx/2;
+		car1->my_car.car_y -= ry/2;
+		car2->my_car.car_x += rx/2;
+		car2->my_car.car_y += ry/2;
+	}
+
+	return;
 	
 	if(car1 != NULL && car2 != NULL)
 	{

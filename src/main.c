@@ -20,15 +20,6 @@
 
 int main(int argc, char **argv)
 {
-	/* ------------------------------------------- */
-	SDL_Surface *screen = NULL;
-	
-	SDL_Joystick *joystick1 = NULL;
-	
-	TTF_Font *font = NULL;
-	
-	char font_path[] = FONT_PATH;
-	
 	char *base_name = 0;
 	
 	/* ------------------------------------------- */
@@ -49,80 +40,95 @@ int main(int argc, char **argv)
 	This could be set but I prefer to handle the SQL_QUIT myself
 	*/
 
-	/* Detect the executable name from the first argument */
-	
-	if( ( base_name = strrchr(argv[0], '/') ) != 0 )
-		++base_name;
-	else
-		base_name = argv[0];
-		
 	/* Temporary name, before we know what we need to load */
 	
 	SDL_WM_SetCaption("Loading XRR", NULL);
 
-	screen = initScreen();
-	
-	if(screen != NULL)
-	{
-		if(initFont() == 0)
-		{
-			font = loadFont(font_path, 12);
-			
-			if(font != NULL)
-			{
-				
-				/* Init the first joystick only */
-				joystick1 = loadInput();
-				
-				/*show_splash(screen, img);
-				 * "images/sdl_logo_640x480.png\0"
-				 * */ 
-				
-				/* Start menu and game loops */
-				if(!strcmp(base_name, PACKAGE) ) 
-				{
-					SDL_ShowCursor(SDL_DISABLE);
-					
-					SDL_WM_SetCaption("X Road Racer - Press any key to start", NULL);
-
-					loadIntroduction(screen, font, joystick1);
-
-					SDL_WM_SetCaption("X Road Racer", NULL);
-					
-					loadGameMenu(screen, font, joystick1);
-				}
-				else
-				{
-					SDL_WM_SetCaption("Race Editor - for X Road Racer", 
-						NULL);
-					
-					startNewEditor(screen, font, joystick1);
-				}
-
-
-				if(joystick1 != NULL)
-					SDL_JoystickClose(joystick1);
-					
-				TTF_CloseFont(font);
-				
-				font = NULL;
-
-			}
-			
-			TTF_Quit();
-			
-		}
-		/*
-		 * It appears that the screen surface will be 
-		 * freed by SDL_Quit() 
-
-		SDL_FreeSurface(screen);
-		screen = NULL;
-		*/
-	}
+        /* Detect the executable name from the first argument */
+        
+        if( ( base_name = strrchr(argv[0], '/') ) != 0 )
+                ++base_name;
+        else
+                base_name = argv[0];
+        
+        loadGame(base_name);
 	
 	SDL_Quit();
 	
 	return(EXIT_SUCCESS);
+}
+
+void loadGame(char *base_name) {
+	/* ------------------------------------------- */
+	SDL_Surface *screen = NULL;
+	
+	SDL_Joystick *joystick1 = NULL;
+	
+	TTF_Font *font = NULL;
+	
+	char font_path[] = FONT_PATH;
+	
+	screen = initScreen();
+	
+	if(screen == NULL)
+	{
+                return;
+        }
+
+        if(initFont() != 0)
+        {
+                return;
+        }
+
+        font = loadFont(font_path, 12);
+        
+        if(font == NULL)
+        {
+                return;
+        }
+                
+        /* Init the first joystick only */
+        joystick1 = loadInput();
+        
+        /* Start menu and game loops */
+        if(!strcmp(base_name, PACKAGE) ) 
+        {
+                SDL_ShowCursor(SDL_DISABLE);
+                
+                SDL_WM_SetCaption("X Road Racer - Press any key to start", NULL);
+
+                loadIntroduction(screen, font, joystick1);
+
+                SDL_WM_SetCaption("X Road Racer", NULL);
+                
+                loadGameMenu(screen, font, joystick1);
+        }
+        else
+        {
+                SDL_WM_SetCaption("Race Editor - for X Road Racer", 
+                        NULL);
+                
+                startNewEditor(screen, font, joystick1);
+        }
+
+
+        if(joystick1 != NULL)
+        {
+                SDL_JoystickClose(joystick1);
+        }
+                
+        TTF_CloseFont(font);
+        
+        font = NULL;
+        
+        TTF_Quit();
+			
+        /*
+         * It appears that the screen surface will be 
+         * freed by SDL_Quit() 
+
+        SDL_FreeSurface(screen);
+        screen = NULL;
+        */
 }
 

@@ -13,5 +13,7 @@
 
 
 
+void loadGame(char *base_name);
+
 
 #endif

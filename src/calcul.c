@@ -1,4 +1,9 @@
 #include <math.h>
+#include <float.h>
+
+#include "struct_points.h"
+#include "struct_car.h"
+#include "points.h"
 
 int min(double a, double b)
 {
@@ -75,4 +80,158 @@ void get_point_on_segment(struct points* p, struct points* q, float *x, float *y
         }
 }
 
+struct points * get_coords(struct car_properties *car)
+{
+        if (car == NULL) {
+                return NULL;
+        }
+
+        float xa, ya, xb, yb;
+        float xc, yc, xd, yd;
+
+        float x, y;
+        x = car->car_x;
+        y = car->car_y;
+
+        float x1, x2, y1, y2;
+        x1 = -car->car->h / 2;
+        y1 = -car->car->w / 4;
+        x2 = car->car->h / 2;
+        y2 = car->car->w / 4;
+
+        rotated_xy(x1, y1, car->rotation, &xa, &ya);
+        xa += x;
+        ya += y;
+        rotated_xy(x1, y2, car->rotation, &xb, &yb);
+        xb += x;
+        yb += y;
+        rotated_xy(x2, y2, car->rotation, &xc, &yc);
+        xc += x;
+        yc += y;
+        rotated_xy(x2, y1, car->rotation, &xd, &yd);
+        xd += x;
+        yd += y;
+
+        struct points *pa = init_point(xa, ya);
+        struct points *pb = init_point(xb, yb);
+        struct points *pc = init_point(xc, yc);
+        struct points *pd = init_point(xd, yd);
+        pa->next = pb;
+        pb->next = pc;
+        pc->next = pd;
+        return pa;
+}
+
+float orientation(struct points *p, struct points *q, struct points *r)
+{
+        float val = (q->y - p->y) * (r->x - q->x) - (q->x - p->x) * (r->y - q->y);
+        if (val == 0)
+                return 0;
+        if (val > 0)
+                return 1;
+        else
+                return 2;
+}
+
+struct points * convex_next(struct points *p, struct points *list) {
+        float tmp_ang = 0;
+        float ang = 0;
+        struct points *tmp = NULL;
+        struct points *next = NULL;
+        tmp = list;
+
+        next = tmp;
+        while (tmp != NULL) {
+                if (tmp != list) {
+                        if (next == p || orientation(p, tmp, next) == 2) {
+                                next = tmp;
+                        }
+                }
+                tmp = tmp->next;
+        }
+
+        return next;
+}
+
+struct points * convex_hull(struct points *p) {
+        struct points *list = NULL;
+        struct points *last = NULL;
+        struct points *tmp = NULL;
+        struct points *next = NULL;
+        struct points *left_most = NULL;
+        float x = FLT_MAX;
+        tmp = p;
+
+        // Find left most x
+        while (tmp != NULL) {
+                if (tmp->x < x) {
+                        x = tmp->x;
+                        left_most = tmp;
+                }
+                tmp = tmp->next;
+        }
+
+        // find next point
+        next = left_most;
+        int i = 0;
+        do {
+                if (next == NULL)
+                {
+                        break;
+                }
+                i++;
+                if (i > 10) {
+                        break;
+                }
+
+                tmp = init_point(next->x, next->y);
+
+                if (list == NULL) {
+                        list = tmp;
+                }
+
+                if (last != NULL) {
+                        last->next = tmp;
+                }
+
+                last = tmp;
+
+                next = convex_next(next, p);
+        } while(next != NULL && next != left_most);
+
+        return list;
+}
+
+struct points * minkowski_difference(struct points *p1, struct points *p2) {
+        struct points *tmp = NULL;
+        struct points *last = NULL;
+        struct points *list = NULL;
+        struct points *pi = NULL;
+        struct points *pj = NULL;
+
+        pi = p1;
+
+        while (pi != NULL) {
+                pj = p2;
+
+                while (pj != NULL) {
+                        tmp = init_point(pi->x - pj->x, pi->y - pj->y);
+
+                        if (list == NULL) {
+                                list = tmp;
+                        }
+                        if (last != NULL) {
+                                last->next = tmp;
+                        }
+
+                        last = tmp;
+
+                        pj = pj->next;
+                }
+
+                pi = pi->next;
+        }
+
+        return list;
+}
 

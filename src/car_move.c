@@ -18,6 +18,8 @@ double vitesse_add=0.007;
 /* Deceleration */
 const double vitesse_del=0.05;
 
+const double vitesse_back=0.001;
+
 /* On the grass */
 const double vitesse_del_ongrass=0.0025;
 
@@ -108,10 +110,14 @@ void car_move_fw(struct car_properties *car_player, int millitime)
 les limites de la piste */
 void car_move_bk(struct car_properties *car_player, int millitime)
 {
-	car_player->speed -= vitesse_del * millitime/FRAMETIME_RATIO;
+        if (car_player->speed > 0) {
+                car_player->speed -= vitesse_del * millitime/FRAMETIME_RATIO;
+        } else {
+                car_player->speed -= vitesse_back * millitime/FRAMETIME_RATIO;
+        }
 	
-	if(car_player->speed < vitesse_add)
-		car_player->speed = 0.0;
+	/*if(car_player->speed < vitesse_add)
+		car_player->speed = 0.0;*/
 }
 /* Faire ralentir la voiture */
 /*void car_move_bk(struct car_properties *car_player, int millitime)

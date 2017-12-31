@@ -218,8 +218,11 @@ void switchAiDebug(struct cars *p, int n)
 	
 	while(p != NULL)
 	{
-		if(bcl == n)
+		if(bcl++ == n)
+                {
 			p->my_car.debugAi = !p->my_car.debugAi;
+			p->my_car.trainAi = !p->my_car.trainAi;
+                }
 
 		p = p->next;
 	}

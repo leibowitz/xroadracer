@@ -414,6 +414,7 @@ void setNewCarVar(struct cars *car)
 	car-> my_car.missed = 0;
 	car->my_car.maxD = 0;
 	car->my_car.debugAi = 0;
+	car->my_car.trainAi = 0;
 	car->my_car.collision = 0;
 }
 

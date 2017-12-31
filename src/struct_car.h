@@ -39,6 +39,7 @@ struct car_properties
 	int time_penality;
 	int is_grass;
 	int debugAi;
+	int trainAi;
 	int finished;
 	int computer;
 	Uint32 lap_time[MAX_LAPS];

@@ -183,7 +183,10 @@ void computerView(int x, int y, float r,
 	
 	int distance = 0, left, right;
 
-	int bcl, d, max = 0, maxSide = 0;
+	int bcl, maxSide = 0;
+        int d, max = 0;
+        int i = 0;
+        float input[17];
 
 	float maxr, cosr, sinr, cost, sint;
 	
@@ -229,7 +232,7 @@ void computerView(int x, int y, float r,
         }
 	
 
-        //input[i++] = roundf(p->speed);
+        input[i++] = roundf(p->speed);
         if (p->trainAi == 1) {
                 printf("%d ", (int)roundf(p->speed));
         }
@@ -241,7 +244,7 @@ void computerView(int x, int y, float r,
 		/* Dans ce cas, on recherche la distance 
 		 * minimum qui sépare la voiture de la route */
 		max = stop;
-                //input[i++] = 0;
+                input[i++] = 0;
                 if (p->trainAi == 1) {
                         printf("0 ");
                 }
@@ -252,7 +255,7 @@ void computerView(int x, int y, float r,
 		 * distance maximum de route disponible 
 		 * vers laquelle se diriger. */
 		max = 0;
-                //input[i++] = 1;
+                input[i++] = 1;
                 if (p->trainAi == 1) {
                         printf("1 ");
                 }
@@ -283,7 +286,7 @@ void computerView(int x, int y, float r,
 			mapInfos->mpRoad,
 			x, y, 
 			baseColor);
-                //input[i++] = (stop-d)/20;
+                input[i++] = (stop-d)/20;
                 if (p->trainAi == 1) {
                         printf("%d ", (stop-d)/20);
                 }
@@ -442,8 +445,37 @@ void computerView(int x, int y, float r,
                         p->k.keys[KEY_MOVELEFT]
                         );
         }
-        }
 
+                 float *output_fw, *output_bw, *output_right, *output_left;
+                 output_fw = fann_run(mapInfos->drivingdata->ann_fw, input);
+                 output_bw = fann_run(mapInfos->drivingdata->ann_bw, input);
+                 output_right = fann_run(mapInfos->drivingdata->ann_right, input);
+                 output_left = fann_run(mapInfos->drivingdata->ann_left, input);
+
+                 float moveup = 0, movedown = 0, moveright = 0, moveleft = 0;
+                 
+                 moveup = (int)roundf(*output_fw);
+                 movedown = (int)roundf(*output_bw);
+                 moveright = (int)roundf(*output_right);
+                 moveleft = (int)roundf(*output_left);
+ 
+
+                if (moveright == 1 && moveleft == 1) {
+                        moveright = 0;
+                        moveleft = 0;
+                }
+
+                if (moveright == 0 && moveleft == 0 && moveup == 0 && movedown == 0) {
+                        moveup = 1;
+                }
+                
+
+                p->k.keys[KEY_MOVEUP] = moveup;
+                p->k.keys[KEY_MOVEDOWN] = movedown;
+                p->k.keys[KEY_MOVERIGHT] = moveright;
+                p->k.keys[KEY_MOVELEFT] = moveleft;
+                
+        }
 
 }
 

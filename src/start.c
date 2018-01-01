@@ -84,6 +84,8 @@ int init_load_game_data(
 		}
 	}
 
+        mapInfos->drivingdata = load_ai_data();
+
 	if(mapInfos->mpCp != NULL)
 		return(0);	
 	

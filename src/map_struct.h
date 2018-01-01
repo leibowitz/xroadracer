@@ -31,6 +31,7 @@ struct mapData {
 	int maxWidth;
 	int maxHeight;
 	struct cars *p;
+        struct ai_data* drivingdata;
 	
 	SDL_Surface *screen;
 };

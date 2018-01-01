@@ -187,6 +187,7 @@ void clearMapData(struct mapData **mapInfos)
 		if(CODEDEBUG)
 			printf(" 3/3 : Clearing mapInfos structure allocation\n");
 		
+                clear_ai_data((*mapInfos)->drivingdata);
 		free(*mapInfos);
 		*mapInfos = NULL;
 	}

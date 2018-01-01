@@ -3,6 +3,7 @@
 
 #include "struct_car.h"
 #include "key.h"
+#include "computer.h"
 #include "car_move.h"
 #include "map_struct.h"
 
@@ -306,7 +307,12 @@ int keyGetEvents(
 				        /*case SDLK_r:
 				        rotate = !rotate;
 				        break;*/
-				        
+
+				        case SDLK_r:
+                                        clear_ai_data(mapInfos->drivingdata);
+                                        mapInfos->drivingdata = load_ai_data();
+                                        break;
+
 				        case SDLK_a:
 					if(debug_ia != NULL)
 				        *debug_ia = !*debug_ia;

@@ -186,7 +186,7 @@ void computerView(int x, int y, float r,
 	int bcl, maxSide = 0;
         int d, max = 0;
         int i = 0;
-        float input[17];
+        float input[18];
 
 	float maxr, cosr, sinr, cost, sint;
 	

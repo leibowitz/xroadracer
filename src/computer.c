@@ -1,15 +1,33 @@
 #include <math.h>
 #include <SDL/SDL.h>
+#include "fann.h"
 
 
 #include "struct_car.h"
 #include "map_struct.h"
 #include "pixel.h"
 #include "angular.h"
+#include "computer.h"
 #include "key.h"
 
 #include "collision.h"
 
+
+struct ai_data* load_ai_data() {
+ struct ai_data *data = (struct ai_data*)malloc(sizeof(struct ai_data));
+ data->ann_fw = fann_create_from_file("../training/map1_fw.net");
+ data->ann_bw = fann_create_from_file("../training/map1_bw.net");
+ data->ann_right = fann_create_from_file("../training/map1_right.net");
+ data->ann_left = fann_create_from_file("../training/map1_left.net");
+ return data;
+}
+
+void clear_ai_data(struct ai_data* data) {
+ fann_destroy(data->ann_fw);
+ fann_destroy(data->ann_bw);
+ fann_destroy(data->ann_right);
+ fann_destroy(data->ann_left);
+}
 
 
 int computerSight(struct car_properties *p,

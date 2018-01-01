@@ -65,11 +65,22 @@ int computerSight(struct car_properties *p,
 		fx = x+roundf(bcl*cos);
 		fy = y+roundf(bcl*sin);
 
-		if(target != NULL && p->debugAi == 1)
+                if (
+                fx > mapInfos->mpBg->w ||
+                fy > mapInfos->mpBg->h ||
+                fx < 0 ||
+                fy < 0
+                ) {
+                        distance = stop-1;
+                        break;
+                }
+
+		if(target != NULL && p->debugAi == 1) {
 			putpixel(target, 
 				fx, 
 				fy,
 				baseColor);
+                }
 
 		if(source != NULL)
 		{

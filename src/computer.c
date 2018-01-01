@@ -203,12 +203,18 @@ void computerView(int x, int y, float r,
 	 * Une valeur 0 signifie "non pressé", 
 	 * tandis que 1 signifie "touche pressé" */
 	
+        if (p->computer == 1) {
 	p->k.keys[KEY_MOVELEFT] = 0;
 	p->k.keys[KEY_MOVERIGHT] = 0;
 	p->k.keys[KEY_MOVEUP] = 0;
 	p->k.keys[KEY_MOVEDOWN] = 0;
+        }
 	
 
+        //input[i++] = roundf(p->speed);
+        if (p->trainAi == 1) {
+                printf("%d ", (int)roundf(p->speed));
+        }
 	/* Le comportement qui va suivre dépend 
 	 * de l'endroit où se trouve le computer,
 	 * c'est-à-dire "route" ou "hors-piste"*/
@@ -217,6 +223,10 @@ void computerView(int x, int y, float r,
 		/* Dans ce cas, on recherche la distance 
 		 * minimum qui sépare la voiture de la route */
 		max = stop;
+                //input[i++] = 0;
+                if (p->trainAi == 1) {
+                        printf("0 ");
+                }
 	}
 	else
 	{
@@ -224,6 +234,10 @@ void computerView(int x, int y, float r,
 		 * distance maximum de route disponible 
 		 * vers laquelle se diriger. */
 		max = 0;
+                //input[i++] = 1;
+                if (p->trainAi == 1) {
+                        printf("1 ");
+                }
 	}
 	
 	
@@ -243,7 +257,7 @@ void computerView(int x, int y, float r,
 	 * Les directions scannées seront alors 
 	 * affichées à l'écran.
 	 * */
-	for(bcl = -60; bcl <= 60; bcl+= 20)
+	for(bcl = -160; bcl <= 160; bcl+= 20)
 	{
 		/* Récuperer la distance maximum ou minimum */
 		d = computerSight(p, start, stop, r+bcl, mapInfos, 
@@ -251,6 +265,10 @@ void computerView(int x, int y, float r,
 			mapInfos->mpRoad,
 			x, y, 
 			baseColor);
+                //input[i++] = (stop-d)/20;
+                if (p->trainAi == 1) {
+                        printf("%d ", (stop-d)/20);
+                }
 
 		/* Sauvegarder la valeur de la distance 
 		 * qui sépare la voiture du bord de la route 
@@ -297,6 +315,9 @@ void computerView(int x, int y, float r,
 		}
 		
 	}
+        if (p->trainAi == 1) {
+                printf("\n\n");
+        }
 
 	/* Informations récoltées pour le debug visuel
 	 *
@@ -328,6 +349,7 @@ void computerView(int x, int y, float r,
 	 * diriger est différent de l'axe de 
 	 * rotation actuel de la voiture, 
 	 * cela signifie qu'il faut tourner. */
+        if (p->computer == 1) {
 	if( maxSide != 0 )
 	{
 		
@@ -393,6 +415,16 @@ void computerView(int x, int y, float r,
 		p->k.keys[KEY_MOVEUP] = 1;
 
 	*/
+
+        if(p->trainAi == 1) {
+                printf("%d %d %d %d\n\n", 
+                        p->k.keys[KEY_MOVEUP],
+                        p->k.keys[KEY_MOVEDOWN],
+                        p->k.keys[KEY_MOVERIGHT],
+                        p->k.keys[KEY_MOVELEFT]
+                        );
+        }
+        }
 
 
 }

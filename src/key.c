@@ -114,6 +114,14 @@ void keyCheckCommand(struct car_properties *c, int frameTime)
 		if(keys[ k.keys[KEY_MOVERIGHT] ])
 			turn++;
 
+	if(c->trainAi && c->computer == 0) {
+        printf("%d %d %d %d\n\n", 
+	keys[k.keys[KEY_MOVEUP]],
+	keys[k.keys[KEY_MOVEDOWN]],
+	keys[k.keys[KEY_MOVERIGHT]],
+	keys[k.keys[KEY_MOVELEFT]]
+                                );
+}
 	}	
 	
 	if(accelBrake>0)

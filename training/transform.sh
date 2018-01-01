@@ -1,15 +1,35 @@
 #!/bin/bash
-LINES=`wc -l map1.txt | cut -c 1-9`
-LINES="$(($LINES / 4))"
-#echo $LINES
-INPUT="${LINES} 19 1\n"
-echo -e $INPUT
-echo -e "${INPUT}" > map1_fw.txt
-echo -e "${INPUT}" > map1_bw.txt
-echo -e "${INPUT}" > map1_right.txt
-echo -e "${INPUT}" > map1_left.txt
-#exit
-python transform.py 0 >> map1_fw.txt
-python transform.py 1 >> map1_bw.txt
-python transform.py 2 >> map1_right.txt
-python transform.py 3 >> map1_left.txt
+NAME='map1'
+INPUTS=19
+
+INPUTTYPE='road'
+
+LINES=`wc -l ${NAME}_${INPUTTYPE}.txt | cut -c 1-9`
+LINES="$(($LINES / 4 - 500))"
+INPUTTXT="${LINES} ${INPUTS} 1\n"
+echo -e ${INPUTTXT}
+echo -e "${INPUTTXT}" > ${NAME}_${INPUTTYPE}_fw.txt
+echo -e "${INPUTTXT}" > ${NAME}_${INPUTTYPE}_bw.txt
+echo -e "${INPUTTXT}" > ${NAME}_${INPUTTYPE}_right.txt
+echo -e "${INPUTTXT}" > ${NAME}_${INPUTTYPE}_left.txt
+
+python transform.py 0 >> ${NAME}_${INPUTTYPE}_fw.txt
+python transform.py 1 >> ${NAME}_${INPUTTYPE}_bw.txt
+python transform.py 2 >> ${NAME}_${INPUTTYPE}_right.txt
+python transform.py 3 >> ${NAME}_${INPUTTYPE}_left.txt
+
+INPUTTYPE='offroad'
+
+LINES=`wc -l ${NAME}_${INPUTTYPE}.txt | cut -c 1-9`
+LINES="$(($LINES / 4 - 10))"
+INPUTTXT="${LINES} ${INPUTS} 1\n"
+echo -e ${INPUTTXT}
+echo -e "${INPUTTXT}" > ${NAME}_${INPUTTYPE}_fw.txt
+echo -e "${INPUTTXT}" > ${NAME}_${INPUTTYPE}_bw.txt
+echo -e "${INPUTTXT}" > ${NAME}_${INPUTTYPE}_right.txt
+echo -e "${INPUTTXT}" > ${NAME}_${INPUTTYPE}_left.txt
+
+python transform.py 0 >> ${NAME}_${INPUTTYPE}_fw.txt
+python transform.py 1 >> ${NAME}_${INPUTTYPE}_bw.txt
+python transform.py 2 >> ${NAME}_${INPUTTYPE}_right.txt
+python transform.py 3 >> ${NAME}_${INPUTTYPE}_left.txt

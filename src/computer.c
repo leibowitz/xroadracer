@@ -185,7 +185,7 @@ struct s_dist getFuzzy(int d)
  *
  *  
  * */
-void computerView(int x, int y, float r,
+int computerView(int x, int y, float r,
 		int start, int stop,
 		struct mapData *mapInfos,
 		struct car_properties *p)
@@ -196,6 +196,7 @@ void computerView(int x, int y, float r,
 	int bcl, maxSide = 0;
         int d, max = 0;
         int i = 0;
+        int ret = 0;
         float input[18];
 
 	float maxr, cosr, sinr, cost, sint;
@@ -227,6 +228,12 @@ void computerView(int x, int y, float r,
 	baseColor = getpixel(mapInfos->mpRoad,
 			x, y);
 
+        if (baseColor == black) {
+                ret = 1;
+        } else {
+                ret = 2;
+        }
+
 	/* Comme dit précedemment, il faut utiliser 
 	 * l'état des touches du joueurs courant 
 	 * pour faire déplacer la voiture. 
@@ -243,32 +250,35 @@ void computerView(int x, int y, float r,
 	
 
         input[i++] = roundf(p->speed);
-        if (p->trainAi == 1) {
-                printf("%d ", (int)roundf(p->speed));
-        }
 	/* Le comportement qui va suivre dépend 
 	 * de l'endroit où se trouve le computer,
 	 * c'est-à-dire "route" ou "hors-piste"*/
 	if(baseColor == black)
 	{
+                if (p->trainAi == 1) {
+                        printf("%d ", (int)roundf(p->speed));
+                }
 		/* Dans ce cas, on recherche la distance 
 		 * minimum qui sépare la voiture de la route */
 		max = stop;
-                input[i++] = 0;
+                /*input[i++] = 0;
                 if (p->trainAi == 1) {
                         printf("0 ");
-                }
+                }*/
 	}
 	else
 	{
+                if (p->trainAi == 2) {
+                        printf("%d ", (int)roundf(p->speed));
+                }
 		/* Dans l'autre, il faut trouver la 
 		 * distance maximum de route disponible 
 		 * vers laquelle se diriger. */
 		max = 0;
-                input[i++] = 1;
+                /*input[i++] = 1;
                 if (p->trainAi == 1) {
                         printf("1 ");
-                }
+                }*/
 	}
 	
 	
@@ -297,8 +307,14 @@ void computerView(int x, int y, float r,
 			x, y, 
 			baseColor);
                 input[i++] = (stop-d)/20;
-                if (p->trainAi == 1) {
-                        printf("%d ", (stop-d)/20);
+                if (baseColor == black) {
+                        if (p->trainAi == 1) {
+                                printf("%d ", (stop-d)/20);
+                        }
+                } else {
+                        if (p->trainAi == 2) {
+                                printf("%d ", (stop-d)/20);
+                        }
                 }
 
 		/* Sauvegarder la valeur de la distance 
@@ -346,8 +362,15 @@ void computerView(int x, int y, float r,
 		}
 		
 	}
-        if (p->trainAi == 1) {
-                printf("\n\n");
+
+        if (baseColor == black) {
+                if (p->trainAi == 1) {
+                        printf("\n\n");
+                }
+        } else {
+                if (p->trainAi == 2) {
+                        printf("\n\n");
+                }
         }
 
 	/* Informations récoltées pour le debug visuel
@@ -447,14 +470,29 @@ void computerView(int x, int y, float r,
 
 	*/
 
-        if(p->trainAi == 1) {
-                printf("%d %d %d %d\n\n", 
-                        p->k.keys[KEY_MOVEUP],
-                        p->k.keys[KEY_MOVEDOWN],
-                        p->k.keys[KEY_MOVERIGHT],
-                        p->k.keys[KEY_MOVELEFT]
-                        );
-        }
+                if (baseColor == black) {
+                        if(p->trainAi == 1) {
+                                printf("%d %d %d %d\n\n", 
+                                        p->k.keys[KEY_MOVEUP],
+                                        p->k.keys[KEY_MOVEDOWN],
+                                        p->k.keys[KEY_MOVERIGHT],
+                                        p->k.keys[KEY_MOVELEFT]
+                                        );
+                        }
+                } else {
+                        if(p->trainAi == 2) {
+                                printf("%d %d %d %d\n\n", 
+                                        p->k.keys[KEY_MOVEUP],
+                                        p->k.keys[KEY_MOVEDOWN],
+                                        p->k.keys[KEY_MOVERIGHT],
+                                        p->k.keys[KEY_MOVELEFT]
+                                        );
+                        }
+                }
+
+                if (mapInfos->drivingdata->offroad_ann_fw == NULL) {
+                        return ret;
+                }
 
                  float *output_fw, *output_bw, *output_right, *output_left;
                  if (black == baseColor) {
@@ -467,6 +505,10 @@ void computerView(int x, int y, float r,
                          output_bw = fann_run(mapInfos->drivingdata->road_ann_bw, input);
                          output_right = fann_run(mapInfos->drivingdata->road_ann_right, input);
                          output_left = fann_run(mapInfos->drivingdata->road_ann_left, input);
+                 }
+
+                 if (output_fw == NULL || output_bw == NULL || output_right == NULL || output_left == NULL) {
+                         return ret;
                  }
 
                  float moveup = 0, movedown = 0, moveright = 0, moveleft = 0;
@@ -494,15 +536,17 @@ void computerView(int x, int y, float r,
                 
         }
 
+        return ret;
 }
 
 /* ------------------------------------------------------ */
 
-void computerIa(struct car_properties *p, struct mapData *mapInfos)
+int computerIa(struct car_properties *p, struct mapData *mapInfos)
 {
 	Uint32 color;
 
 	int x, y;
+        int r = -1;
 	
 	if(mapInfos->mpRoad != NULL && p != NULL)
 
@@ -527,8 +571,8 @@ void computerIa(struct car_properties *p, struct mapData *mapInfos)
 		y = (int)roundf(p->car_y);
 
 
-		computerView(
-			x, 
+		r = computerView(
+			x,
 			y,
 				p->rotation,
 				0, 200,
@@ -547,4 +591,6 @@ void computerIa(struct car_properties *p, struct mapData *mapInfos)
 		
 
 	}
+
+        return r;
 }

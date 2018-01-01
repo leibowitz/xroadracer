@@ -141,14 +141,16 @@ void playersMove(struct mapData *mapInfos, int frameTime)
 
 	p = mapInfos->p;
 
+        int r = 0;
+
 	while(p != NULL)
 	{
-		if(p->my_car.computer)
+		//if(p->my_car.computer)
 		{
-			computerIa(&(p->my_car), mapInfos);
+			r = computerIa(&(p->my_car), mapInfos);
 		}
 		
-		keyCheckCommand( &(p->my_car), frameTime );
+		keyCheckCommand( &(p->my_car), frameTime, r );
 		
 		p = p->next;
 	}

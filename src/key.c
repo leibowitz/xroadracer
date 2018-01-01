@@ -74,7 +74,7 @@ void PrintKeyInfo( SDL_KeyboardEvent *key )
 	return;
 }
 
-void keyCheckCommand(struct car_properties *c, int frameTime)
+void keyCheckCommand(struct car_properties *c, int frameTime, int r)
 {
 	Uint8 *keys;
 
@@ -114,7 +114,7 @@ void keyCheckCommand(struct car_properties *c, int frameTime)
 		if(keys[ k.keys[KEY_MOVERIGHT] ])
 			turn++;
 
-	if(c->trainAi && c->computer == 0) {
+	if(c->trainAi == r && c->computer == 0) {
         printf("%d %d %d %d\n\n", 
 	keys[k.keys[KEY_MOVEUP]],
 	keys[k.keys[KEY_MOVEDOWN]],
@@ -229,8 +229,12 @@ void switchAiDebug(struct cars *p, int n)
 	{
 		if(bcl++ == n)
                 {
-			p->my_car.debugAi = !p->my_car.debugAi;
-			p->my_car.trainAi = !p->my_car.trainAi;
+                        if (p->my_car.trainAi == 1) {
+                                p->my_car.trainAi = 2;
+                        } else {
+                                p->my_car.debugAi = !p->my_car.debugAi;
+                                p->my_car.trainAi = !p->my_car.trainAi;
+                        }
                 }
 
 		p = p->next;

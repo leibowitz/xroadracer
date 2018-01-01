@@ -15,7 +15,7 @@ struct ai_data {
  struct fann *offroad_ann_left;
 };
 
-void computerIa(struct car_properties *p, struct mapData *mapInfos);
+int computerIa(struct car_properties *p, struct mapData *mapInfos);
 
 struct ai_data* load_ai_data();
 

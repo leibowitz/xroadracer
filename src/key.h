@@ -22,7 +22,7 @@ void key_handling_press(
 
 void key_read_config(int *p_key_fct_tab[], int *p_key_fct_sdlcode[]);
 
-void keyCheckCommand(struct car_properties *c, int frameTime);
+void keyCheckCommand(struct car_properties *c, int frameTime, int r);
 
 int keyGetEvents( 
 	int game_started, 

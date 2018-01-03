@@ -597,13 +597,6 @@ int computerIa(struct car_properties *p, struct mapData *mapInfos)
 	
 		if(mapInfos->mpDecoration != NULL)
 		{
-			color = SDL_MapRGB(
-					mapInfos->mpDecoration->format,
-				0,0,255);
-
-			SDL_FillRect(mapInfos->mpDecoration, NULL,
-					color);
-		
 			if(SDL_MUSTLOCK(mapInfos->mpDecoration))
 				SDL_LockSurface(mapInfos->mpDecoration);
 		}

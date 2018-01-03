@@ -118,6 +118,16 @@ int keyWaitHit()
 	return(1);
 		
 }
+
+void initDecoration(SDL_Surface *s) {
+        if (s == NULL) {
+                return;
+        }
+        Uint32 color = SDL_MapRGB(s->format,0,0,255);
+
+        SDL_FillRect(s, NULL, color);
+}
+
 /*
 void showCarOnScreen(struct mapData *mapInfos)
 {
@@ -811,7 +821,10 @@ void startRace(SDL_Joystick *joystick1, TTF_Font *font, struct mapData *mapInfos
 		
 		if(gameStarted && !pause)
 		{
+
 			mapInfos->timeElapsed += frameTime;
+         	        
+                        initDecoration(mapInfos->mpDecoration);
 
 			playersMove(mapInfos, frameTime);
 

@@ -1,5 +1,8 @@
 #!/bin/bash
-NAME='map1'
+if [ $# = 0 ]; then
+        exit 1
+fi
+NAME="$1"
 INPUTS=18
 
 INPUTTYPE='road'

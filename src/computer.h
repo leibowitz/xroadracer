@@ -9,6 +9,11 @@ struct ai_key_output {
  struct fann *ann_bw;
  struct fann *ann_right;
  struct fann *ann_left;
+ struct fann *ann_fw_right;
+ struct fann *ann_fw_left;
+ struct fann *ann_bw_right;
+ struct fann *ann_bw_left;
+ struct fann *ann_none;
 };
 
 struct ai_data {

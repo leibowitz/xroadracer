@@ -23,11 +23,21 @@ struct ai_data* load_ai_data() {
  data->road->ann_bw = fann_create_from_file("../training/map1_road_bw.net");
  data->road->ann_right = fann_create_from_file("../training/map1_road_right.net");
  data->road->ann_left = fann_create_from_file("../training/map1_road_left.net");
+ data->road->ann_fw_right = fann_create_from_file("../training/map1_road_fw_right.net");
+ data->road->ann_fw_left = fann_create_from_file("../training/map1_road_fw_left.net");
+ data->road->ann_bw_right = fann_create_from_file("../training/map1_road_bw_right.net");
+ data->road->ann_bw_left = fann_create_from_file("../training/map1_road_bw_left.net");
+ data->road->ann_none = fann_create_from_file("../training/map1_road_none.net");
  
  data->offroad->ann_fw = fann_create_from_file("../training/map1_offroad_fw.net");
  data->offroad->ann_bw = fann_create_from_file("../training/map1_offroad_bw.net");
  data->offroad->ann_right = fann_create_from_file("../training/map1_offroad_right.net");
  data->offroad->ann_left = fann_create_from_file("../training/map1_offroad_left.net");
+ data->offroad->ann_fw_right = fann_create_from_file("../training/map1_offroad_fw_right.net");
+ data->offroad->ann_fw_left = fann_create_from_file("../training/map1_offroad_fw_left.net");
+ data->offroad->ann_bw_right = fann_create_from_file("../training/map1_offroad_bw_right.net");
+ data->offroad->ann_bw_left = fann_create_from_file("../training/map1_offroad_bw_left.net");
+ data->offroad->ann_none = fann_create_from_file("../training/map1_offroad_none.net");
  return data;
 }
 
@@ -36,11 +46,21 @@ void clear_ai_data(struct ai_data* data) {
  fann_destroy(data->road->ann_bw);
  fann_destroy(data->road->ann_right);
  fann_destroy(data->road->ann_left);
+ fann_destroy(data->road->ann_fw_right);
+ fann_destroy(data->road->ann_fw_left);
+ fann_destroy(data->road->ann_bw_right);
+ fann_destroy(data->road->ann_bw_left);
+ fann_destroy(data->road->ann_none);
  
  fann_destroy(data->offroad->ann_fw);
  fann_destroy(data->offroad->ann_bw);
  fann_destroy(data->offroad->ann_right);
  fann_destroy(data->offroad->ann_left);
+ fann_destroy(data->offroad->ann_fw_right);
+ fann_destroy(data->offroad->ann_fw_left);
+ fann_destroy(data->offroad->ann_bw_right);
+ fann_destroy(data->offroad->ann_bw_left);
+ fann_destroy(data->offroad->ann_none);
 
  free(data->road);
  data->road = NULL;
@@ -237,65 +257,42 @@ void print_output(int *keys, Uint8 *k) {
 }
 
 void press_computer_keys(int *keys, struct ai_key_output* output, float *input, int offroad, double speed) {
-        if (output->ann_fw == NULL) {
+        if (
+                output->ann_fw == NULL ||
+                output->ann_bw == NULL ||
+                output->ann_right == NULL ||
+                output->ann_left == NULL ||
+                output->ann_fw_right == NULL ||
+                output->ann_fw_left == NULL ||
+                output->ann_bw_right == NULL ||
+                output->ann_bw_left == NULL ||
+                output->ann_none == NULL
+        ) {
                 return;
         }
 
         float *output_fw, *output_bw, *output_right, *output_left;
+        float *output_bw_right, *output_bw_left, *output_fw_right, *output_fw_left, *none;
         output_fw = fann_run(output->ann_fw, input);
         output_bw = fann_run(output->ann_bw, input);
         output_right = fann_run(output->ann_right, input);
         output_left = fann_run(output->ann_left, input);
+        output_fw_right = fann_run(output->ann_fw_right, input);
+        output_fw_left = fann_run(output->ann_fw_left, input);
+        output_bw_right = fann_run(output->ann_bw_right, input);
+        output_bw_left = fann_run(output->ann_bw_left, input);
+        none = fann_run(output->ann_none, input);
         if (output_fw == NULL || output_bw == NULL || output_right == NULL || output_left == NULL) {
+                return;
+        }
+        if (output_fw_right == NULL || output_fw_left == NULL
+                        || output_bw_right == NULL || output_bw_left == NULL
+                        || none == NULL)
+        {
                 return;
         }
 
         int moveup = 0, movedown = 0, moveright = 0, moveleft = 0;
-
-        moveup = (int)roundf(*output_fw);
-        movedown = (int)roundf(*output_bw);
-
-        if (*output_fw > *output_bw) {
-                movedown = 0;
-        } else {
-                moveup = 0;
-        }
-
-        moveright = (int)roundf(*output_right);
-        moveleft = (int)roundf(*output_left);
-
-        if (*output_right > *output_left) {
-                moveleft = 0;
-        } else if (*output_left > *output_right) {
-                moveright = 0;
-        }
-
-        if (moveright == 1 && moveleft == 1) {
-                moveright = 0;
-                moveleft = 0;
-        } else if (moveright == 0 && moveleft == 0) {
-                if (*output_right > 0.3) {
-                        moveright = 1;
-                } else if (*output_left > 0.3) {
-                        moveleft = 1;
-                }
-        }
-
-        if (moveup == 1 && movedown == 1) {
-                moveup = 0;
-        }
-
-        if (moveright == 0 && moveleft == 0 && moveup == 0 && movedown == 0 && speed < 1) {
-                moveup = 1;
-        }
-
-        if (offroad == 0) {
-                if (speed < 1) {
-                        moveup = 1;
-                        moveleft = 0;
-                        moveright = 0;
-                }
-        }
 
         keys[KEY_MOVEUP] = moveup;
         keys[KEY_MOVEDOWN] = movedown;

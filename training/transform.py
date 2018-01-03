@@ -1,10 +1,11 @@
 #!/bin/python
 import sys
-if len(sys.argv) < 2:
+if len(sys.argv) < 3:
     sys.exit(1)
 idx = int(sys.argv[1])
+filename = sys.argv[2]
 
-with open('map1.txt', 'r') as fp:
+with open(filename, 'r') as fp:
     i = 0
     while(1):
         line = fp.readline()

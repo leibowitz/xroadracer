@@ -61,7 +61,19 @@ int main(int argc, char *argv[])
  //char *data_type = "offroad\0";
 // char *data_type = "road\0";
  if(strncmp(data_type, "road", 4) == 0) {
-        if(strncmp(output_name, "fw", 2) == 0) {
+        if(strncmp(output_name, "fw_right", 8) == 0) {
+                r = 0.09;
+        }
+        else if(strncmp(output_name, "fw_left", 7) == 0) {
+                r = 0.09;
+        }
+        else if(strncmp(output_name, "bw_right", 8) == 0) {
+                r = 0.09;
+        }
+        else if(strncmp(output_name, "bw_left", 7) == 0) {
+                r = 0.09;
+        }
+        else if(strncmp(output_name, "fw", 2) == 0) {
                 r = 0.03;
         }
         else if(strncmp(output_name, "bw", 2) == 0) {
@@ -73,11 +85,26 @@ int main(int argc, char *argv[])
         else if(strncmp(output_name, "left", 4) == 0) {
                 r = 0.09;
         }
+        else if(strncmp(output_name, "none", 4) == 0) {
+                r = 0.09;
+        }
         else {
                 exit(1);
         }
  } else {
-        if(strncmp(output_name, "fw", 2) == 0) {
+        if(strncmp(output_name, "fw_right", 8) == 0) {
+                r = 0.09;
+        }
+        else if(strncmp(output_name, "fw_left", 7) == 0) {
+                r = 0.09;
+        }
+        else if(strncmp(output_name, "bw_right", 8) == 0) {
+                r = 0.09;
+        }
+        else if(strncmp(output_name, "bw_left", 7) == 0) {
+                r = 0.09;
+        }
+        else if(strncmp(output_name, "fw", 2) == 0) {
                 r = 0.02;
         }
         else if(strncmp(output_name, "bw", 2) == 0) {
@@ -87,6 +114,9 @@ int main(int argc, char *argv[])
                 r = 0.07;
         }
         else if(strncmp(output_name, "left", 4) == 0) {
+                r = 0.09;
+        }
+        else if(strncmp(output_name, "none", 4) == 0) {
                 r = 0.09;
         }
         else {

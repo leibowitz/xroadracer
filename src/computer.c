@@ -293,6 +293,107 @@ void press_computer_keys(int *keys, struct ai_key_output* output, float *input, 
         }
 
         int moveup = 0, movedown = 0, moveright = 0, moveleft = 0;
+        if (
+                *output_fw > *output_bw &&
+                *output_fw > *output_right &&
+                *output_fw > *output_left &&
+                *output_fw > *output_fw_right &&
+                *output_fw > *output_fw_left &&
+                *output_fw > *output_bw_right &&
+                *output_fw > *output_bw_left &&
+                *output_fw > *none
+                        )
+        {
+                moveup = 1;
+        } else if (
+                *output_bw > *output_fw &&
+                *output_bw > *output_right &&
+                *output_bw > *output_left &&
+                *output_bw > *output_fw_right &&
+                *output_bw > *output_fw_left &&
+                *output_bw > *output_bw_right &&
+                *output_bw > *output_bw_left &&
+                *output_bw > *none
+                        )
+        {
+                movedown = 1;
+        } else if (
+                *output_right > *output_fw &&
+                *output_right > *output_bw &&
+                *output_right > *output_left &&
+                *output_right > *output_fw_right &&
+                *output_right > *output_fw_left &&
+                *output_right > *output_bw_right &&
+                *output_right > *output_bw_left &&
+                *output_right > *none
+                        )
+        {
+                moveright = 1;
+        } else if (
+                *output_left > *output_fw &&
+                *output_left > *output_bw &&
+                *output_left > *output_right &&
+                *output_left > *output_fw_right &&
+                *output_left > *output_fw_left &&
+                *output_left > *output_bw_right &&
+                *output_left > *output_bw_left &&
+                *output_left > *none
+                        )
+        {
+                moveleft = 1;
+        } else if (
+                *output_fw_right > *output_fw &&
+                *output_fw_right > *output_bw &&
+                *output_fw_right > *output_right &&
+                *output_fw_right > *output_left &&
+                *output_fw_right > *output_fw_left &&
+                *output_fw_right > *output_bw_right &&
+                *output_fw_right > *output_bw_left &&
+                *output_fw_right > *none
+                        )
+        {
+                moveright = 1;
+                moveup = 1;
+        } else if (
+                *output_fw_left > *output_fw &&
+                *output_fw_left > *output_bw &&
+                *output_fw_left > *output_right &&
+                *output_fw_left > *output_left &&
+                *output_fw_left > *output_fw_right &&
+                *output_fw_left > *output_bw_right &&
+                *output_fw_left > *output_bw_left &&
+                *output_fw_left > *none
+                        )
+        {
+                moveright = 1;
+                movedown = 1;
+        } else if (
+                *output_bw_right > *output_fw &&
+                *output_bw_right > *output_bw &&
+                *output_bw_right > *output_right &&
+                *output_bw_right > *output_left &&
+                *output_bw_right > *output_fw_right &&
+                *output_bw_right > *output_fw_left &&
+                *output_bw_right > *output_bw_left &&
+                *output_bw_right > *none
+                        )
+        {
+                movedown = 1;
+                moveright = 1;
+        } else if (
+                *output_bw_left > *output_fw &&
+                *output_bw_left > *output_bw &&
+                *output_bw_left > *output_right &&
+                *output_bw_left > *output_left &&
+                *output_bw_left > *output_fw_right &&
+                *output_bw_left > *output_fw_left &&
+                *output_bw_left > *output_bw_right &&
+                *output_bw_left > *none
+                        )
+        {
+                movedown = 1;
+                moveleft = 1;
+        }
 
         keys[KEY_MOVEUP] = moveup;
         keys[KEY_MOVEDOWN] = movedown;

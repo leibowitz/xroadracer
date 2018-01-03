@@ -15,28 +15,38 @@
 
 struct ai_data* load_ai_data() {
  struct ai_data *data = (struct ai_data*)malloc(sizeof(struct ai_data));
- data->road_ann_fw = fann_create_from_file("../training/map1_road_fw.net");
- data->road_ann_bw = fann_create_from_file("../training/map1_road_bw.net");
- data->road_ann_right = fann_create_from_file("../training/map1_road_right.net");
- data->road_ann_left = fann_create_from_file("../training/map1_road_left.net");
+ struct ai_key_output* road = (struct ai_key_output*)malloc(sizeof(struct ai_key_output));
+ struct ai_key_output* offroad = (struct ai_key_output*)malloc(sizeof(struct ai_key_output));
+ data->road = road;
+ data->offroad = offroad;
+ data->road->ann_fw = fann_create_from_file("../training/map1_road_fw.net");
+ data->road->ann_bw = fann_create_from_file("../training/map1_road_bw.net");
+ data->road->ann_right = fann_create_from_file("../training/map1_road_right.net");
+ data->road->ann_left = fann_create_from_file("../training/map1_road_left.net");
  
- data->offroad_ann_fw = fann_create_from_file("../training/map1_offroad_fw.net");
- data->offroad_ann_bw = fann_create_from_file("../training/map1_offroad_bw.net");
- data->offroad_ann_right = fann_create_from_file("../training/map1_offroad_right.net");
- data->offroad_ann_left = fann_create_from_file("../training/map1_offroad_left.net");
+ data->offroad->ann_fw = fann_create_from_file("../training/map1_offroad_fw.net");
+ data->offroad->ann_bw = fann_create_from_file("../training/map1_offroad_bw.net");
+ data->offroad->ann_right = fann_create_from_file("../training/map1_offroad_right.net");
+ data->offroad->ann_left = fann_create_from_file("../training/map1_offroad_left.net");
  return data;
 }
 
 void clear_ai_data(struct ai_data* data) {
- fann_destroy(data->road_ann_fw);
- fann_destroy(data->road_ann_bw);
- fann_destroy(data->road_ann_right);
- fann_destroy(data->road_ann_left);
+ fann_destroy(data->road->ann_fw);
+ fann_destroy(data->road->ann_bw);
+ fann_destroy(data->road->ann_right);
+ fann_destroy(data->road->ann_left);
  
- fann_destroy(data->offroad_ann_fw);
- fann_destroy(data->offroad_ann_bw);
- fann_destroy(data->offroad_ann_right);
- fann_destroy(data->offroad_ann_left);
+ fann_destroy(data->offroad->ann_fw);
+ fann_destroy(data->offroad->ann_bw);
+ fann_destroy(data->offroad->ann_right);
+ fann_destroy(data->offroad->ann_left);
+
+ free(data->road);
+ data->road = NULL;
+ free(data->offroad);
+ data->offroad = NULL;
+ free(data);
 }
 
 
@@ -553,21 +563,21 @@ int computerView(int x, int y, float r,
                         }
                 }
 
-                if (mapInfos->drivingdata->offroad_ann_fw == NULL) {
+                if (mapInfos->drivingdata->offroad->ann_fw == NULL) {
                         return ret;
                 }
-
+                 
                  float *output_fw, *output_bw, *output_right, *output_left;
                  if (black == baseColor) {
-                         output_fw = fann_run(mapInfos->drivingdata->offroad_ann_fw, input);
-                         output_bw = fann_run(mapInfos->drivingdata->offroad_ann_bw, input);
-                         output_right = fann_run(mapInfos->drivingdata->offroad_ann_right, input);
-                         output_left = fann_run(mapInfos->drivingdata->offroad_ann_left, input);
+                         output_fw = fann_run(mapInfos->drivingdata->offroad->ann_fw, input);
+                         output_bw = fann_run(mapInfos->drivingdata->offroad->ann_bw, input);
+                         output_right = fann_run(mapInfos->drivingdata->offroad->ann_right, input);
+                         output_left = fann_run(mapInfos->drivingdata->offroad->ann_left, input);
                  } else {
-                         output_fw = fann_run(mapInfos->drivingdata->road_ann_fw, input);
-                         output_bw = fann_run(mapInfos->drivingdata->road_ann_bw, input);
-                         output_right = fann_run(mapInfos->drivingdata->road_ann_right, input);
-                         output_left = fann_run(mapInfos->drivingdata->road_ann_left, input);
+                         output_fw = fann_run(mapInfos->drivingdata->road->ann_fw, input);
+                         output_bw = fann_run(mapInfos->drivingdata->road->ann_bw, input);
+                         output_right = fann_run(mapInfos->drivingdata->road->ann_right, input);
+                         output_left = fann_run(mapInfos->drivingdata->road->ann_left, input);
                  }
 
                  if (output_fw == NULL || output_bw == NULL || output_right == NULL || output_left == NULL) {

@@ -3,16 +3,17 @@
 #include "fann.h"
 #include "map_struct.h"
 #include "struct_car.h"
+
+struct ai_key_output {
+ struct fann *ann_fw;
+ struct fann *ann_bw;
+ struct fann *ann_right;
+ struct fann *ann_left;
+};
+
 struct ai_data {
- struct fann *road_ann_fw;
- struct fann *road_ann_bw;
- struct fann *road_ann_right;
- struct fann *road_ann_left;
- 
- struct fann *offroad_ann_fw;
- struct fann *offroad_ann_bw;
- struct fann *offroad_ann_right;
- struct fann *offroad_ann_left;
+ struct ai_key_output* road;
+ struct ai_key_output* offroad;
 };
 
 int computerIa(struct car_properties *p, struct mapData *mapInfos);

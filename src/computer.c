@@ -167,13 +167,63 @@ struct s_dist getFuzzy(int d)
 	return(dist);
 }
 
-void print_output(int *keys) {
-        printf("%d %d %d %d\n\n", 
-                keys[KEY_MOVEUP],
-                keys[KEY_MOVEDOWN],
-                keys[KEY_MOVERIGHT],
-                keys[KEY_MOVELEFT]
-                );
+int get_key_value(int *keys, int i, Uint8 *k) {
+        if (k == NULL) {
+                return keys[i];
+        }
+
+        return k[keys[i]];
+}
+
+void print_output(int *keys, Uint8 *k) {
+        int up = 0, down = 0, up_right = 0, up_left = 0, down_right = 0, down_left = 0, right = 0, left = 0, none = 0;
+
+        switch(get_key_value(keys, KEY_MOVEDOWN, k)) {
+                case 1:
+                        if (get_key_value(keys, KEY_MOVELEFT, k) == 1 && get_key_value(keys, KEY_MOVERIGHT, k) == 0) {
+                                down_left = 1;
+                                break;
+                        }
+                        if (get_key_value(keys, KEY_MOVERIGHT, k) == 1 && get_key_value(keys, KEY_MOVELEFT, k) == 0) {
+                                down_right = 1;
+                                break;
+                        }
+                        down = 1;
+                        break;
+
+                case 0:
+                default:
+
+                switch(get_key_value(keys, KEY_MOVEUP, k)) {
+                        case 0:
+                                if (get_key_value(keys, KEY_MOVELEFT, k) == 1 && get_key_value(keys, KEY_MOVERIGHT, k) == 0) {
+                                        left = 1;
+                                        break;
+                                }
+                                if (get_key_value(keys, KEY_MOVERIGHT, k) == 1 && get_key_value(keys, KEY_MOVELEFT, k) == 0) {
+                                        right = 1;
+                                        break;
+                                }
+                                none = 1;
+                                break;
+
+                        case 1:
+                                if (get_key_value(keys, KEY_MOVELEFT, k) == 1 && get_key_value(keys, KEY_MOVERIGHT, k) == 0) {
+                                        up_left = 1;
+                                        break;
+                                }
+                                if (get_key_value(keys, KEY_MOVERIGHT, k) == 1 && get_key_value(keys, KEY_MOVELEFT, k) == 0) {
+                                        up_right = 1;
+                                        break;
+                                }
+                                up = 1;
+                                break;
+                }
+        }
+
+        printf("%d %d %d %d %d %d %d %d %d\n\n",
+                up, down, up_right, up_left, down_right, down_left, right, left, none
+        );
 }
 
 /* -------------------------|
@@ -495,11 +545,11 @@ int computerView(int x, int y, float r,
 
                 if (baseColor == black) {
                         if(p->trainAi == 1) {
-                                print_output(p->k.keys);
+                                print_output(p->k.keys, NULL);
                         }
                 } else {
                         if(p->trainAi == 2) {
-                                print_output(p->k.keys);
+                                print_output(p->k.keys, NULL);
                         }
                 }
 

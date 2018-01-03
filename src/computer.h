@@ -21,4 +21,6 @@ struct ai_data* load_ai_data();
 
 void clear_ai_data(struct ai_data* data);
 
+void print_output(int *keys, Uint8 *k);
+
 #endif

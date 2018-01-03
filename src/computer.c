@@ -525,23 +525,52 @@ int computerView(int x, int y, float r,
                          return ret;
                  }
 
-                 float moveup = 0, movedown = 0, moveright = 0, moveleft = 0;
+                 int moveup = 0, movedown = 0, moveright = 0, moveleft = 0;
                  
                  moveup = (int)roundf(*output_fw);
                  movedown = (int)roundf(*output_bw);
+
+                 if (*output_fw > *output_bw) {
+                         movedown = 0;
+                 } else {
+                         moveup = 0;
+                 }
+
                  moveright = (int)roundf(*output_right);
                  moveleft = (int)roundf(*output_left);
  
+                 if (*output_right > *output_left) {
+                         moveleft = 0;
+                 } else if (*output_left > *output_right) {
+                         moveright = 0;
+                 }
 
                 if (moveright == 1 && moveleft == 1) {
                         moveright = 0;
                         moveleft = 0;
+                } else if (moveright == 0 && moveleft == 0) {
+                        if (*output_right > 0.3) {
+                                moveright = 1;
+                        } else if (*output_left > 0.3) {
+                                moveleft = 1;
+                        }
+                }
+                
+                if (moveup == 1 && movedown == 1) {
+                        moveup = 0;
                 }
 
-                if (moveright == 0 && moveleft == 0 && moveup == 0 && movedown == 0) {
+                if (moveright == 0 && moveleft == 0 && moveup == 0 && movedown == 0 && p->speed < 1) {
                         moveup = 1;
                 }
                 
+                if (baseColor != black) {
+                if (p->speed < 1) {
+                        moveup = 1;
+                        moveleft = 0;
+                        moveright = 0;
+                }
+                }
 
                 p->k.keys[KEY_MOVEUP] = moveup;
                 p->k.keys[KEY_MOVEDOWN] = movedown;

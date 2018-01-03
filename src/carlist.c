@@ -305,8 +305,8 @@ int init_car_list(SDL_Surface *surface, struct cars *list_cars)
 		
 		car_player-> my_car.SPEED_MAX = MAX_SPEED_ROAD;
 
-		if(car_player -> my_car.computer)
-			car_player->my_car.SPEED_MAX += 1.4;
+		//if(car_player -> my_car.computer)
+		//	car_player->my_car.SPEED_MAX += 1.4;
 		
 		car_player-> my_car.ADD_SPEED = ADD_SPEED_ROAD;
 		

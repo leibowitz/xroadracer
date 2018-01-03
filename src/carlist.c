@@ -116,7 +116,7 @@ int init_car_list(SDL_Surface *surface, struct cars *list_cars)
 		car_player->my_car.playerNumber = nb;
 		car_player->my_car.finished = 0;
 
-		if(car_player -> prev != NULL)
+		if(car_player -> prev == NULL)
 		{
 			
 			car_player -> my_car.computer = 1;

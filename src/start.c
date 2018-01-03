@@ -729,7 +729,7 @@ void blitEverything(struct mapData *mapInfos)
 
 	while(p != NULL)
 	{
-		if(p->my_car.computer == 0)
+		if(p->my_car.computer == 0 || mapInfos->n_players == 1)
 		{
 			dest = p->my_car.destView;
 

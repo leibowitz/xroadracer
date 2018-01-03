@@ -167,6 +167,15 @@ struct s_dist getFuzzy(int d)
 	return(dist);
 }
 
+void print_output(int *keys) {
+        printf("%d %d %d %d\n\n", 
+                keys[KEY_MOVEUP],
+                keys[KEY_MOVEDOWN],
+                keys[KEY_MOVERIGHT],
+                keys[KEY_MOVELEFT]
+                );
+}
+
 /* -------------------------|
  * Intelligence Artificielle| 
  * -------------------------|
@@ -486,21 +495,11 @@ int computerView(int x, int y, float r,
 
                 if (baseColor == black) {
                         if(p->trainAi == 1) {
-                                printf("%d %d %d %d\n\n", 
-                                        p->k.keys[KEY_MOVEUP],
-                                        p->k.keys[KEY_MOVEDOWN],
-                                        p->k.keys[KEY_MOVERIGHT],
-                                        p->k.keys[KEY_MOVELEFT]
-                                        );
+                                print_output(p->k.keys);
                         }
                 } else {
                         if(p->trainAi == 2) {
-                                printf("%d %d %d %d\n\n", 
-                                        p->k.keys[KEY_MOVEUP],
-                                        p->k.keys[KEY_MOVEDOWN],
-                                        p->k.keys[KEY_MOVERIGHT],
-                                        p->k.keys[KEY_MOVELEFT]
-                                        );
+                                print_output(p->k.keys);
                         }
                 }
 

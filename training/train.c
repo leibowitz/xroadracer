@@ -62,28 +62,28 @@ int main(int argc, char *argv[])
 // char *data_type = "road\0";
  if(strncmp(data_type, "road", 4) == 0) {
         if(strncmp(output_name, "fw_right", 8) == 0) {
-                r = 0.09;
+                r = 0.15;
         }
         else if(strncmp(output_name, "fw_left", 7) == 0) {
-                r = 0.09;
+                r = 0.15;
         }
         else if(strncmp(output_name, "bw_right", 8) == 0) {
-                r = 0.09;
+                r = 0.15;
         }
         else if(strncmp(output_name, "bw_left", 7) == 0) {
-                r = 0.09;
+                r = 0.15;
         }
         else if(strncmp(output_name, "fw", 2) == 0) {
-                r = 0.03;
+                r = 0.20;
         }
         else if(strncmp(output_name, "bw", 2) == 0) {
                 r = 0.09;
         }
         else if(strncmp(output_name, "right", 5) == 0) {
-                r = 0.035;
+                r = 0.045;
         }
         else if(strncmp(output_name, "left", 4) == 0) {
-                r = 0.09;
+                r = 0.15;
         }
         else if(strncmp(output_name, "none", 4) == 0) {
                 r = 0.09;

@@ -49,6 +49,7 @@ int computerSight(struct car_properties *p,
 		Uint32 baseColor)
 {
 	int bcl, fx, fy, distance = -1;
+        Uint32 color = SDL_MapRGB(mapInfos->screen->format, 200,150,100);
 
 	float cos, sin, ang;
 
@@ -79,7 +80,7 @@ int computerSight(struct car_properties *p,
 			putpixel(target, 
 				fx, 
 				fy,
-				baseColor);
+				color);
                 }
 
 		if(source != NULL)

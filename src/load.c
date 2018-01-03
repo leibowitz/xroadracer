@@ -320,7 +320,7 @@ void initMapOffset(struct mapData *mapInfos)
 	*/
 	while(p != NULL)
 	{
-		if(p -> my_car.computer == 0)
+		if(p -> my_car.computer == 0 || mapInfos->n_players == 1)
 		{
 			/* Find max offset for width and height */
 			w = mapInfos->mpBg->w - p->my_car.destView.w;
@@ -444,6 +444,8 @@ struct mapData * loadMap(
 		checkCarData(mapInfos);
 		
 		pNumb = init_car_list(screen, mapInfos->p );
+                mapInfos->n_players = pNumb;
+
 		
 		if( pNumb < 1 )
 		{

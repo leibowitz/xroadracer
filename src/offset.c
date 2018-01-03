@@ -31,7 +31,7 @@ void updateMapOffset(struct mapData *mapInfos)
 	
 	while(car_player != NULL)
 	{
-		if(car_player -> my_car.computer == 0)
+		if(car_player -> my_car.computer == 0 || mapInfos->n_players == 1)
 		{
 			offsetSub(car_player->my_car.car_x,
 				&(car_player->my_car.offsetView.x),

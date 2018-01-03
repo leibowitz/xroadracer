@@ -365,7 +365,7 @@ int init_car_list(SDL_Surface *surface, struct cars *list_cars)
 		
 		while(car_player != NULL)
 		{
-			if(car_player->my_car.computer == 0)
+			if(car_player->my_car.computer == 0 || (car_player->my_car.playerNumber == 0 && car_player->next == NULL))
 			{
 				car_player->my_car.destView.x = 0;
 				

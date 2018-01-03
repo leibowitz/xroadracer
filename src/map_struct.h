@@ -11,6 +11,7 @@ struct mapData {
 	int bestLapTime;
 	int goldenLapTime;
 	int maxPlayers;
+	int n_players;
 	int playersFinished;
 	int maxTours;
 	Uint32 timeElapsed;

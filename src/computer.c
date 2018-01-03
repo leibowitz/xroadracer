@@ -46,7 +46,8 @@ int computerSight(struct car_properties *p,
 		SDL_Surface *target,
 		SDL_Surface *source,
 		int x, int y,
-		Uint32 baseColor)
+		Uint32 baseColor,
+		Uint32 black)
 {
 	int bcl, fx, fy, distance = -1;
         Uint32 color = SDL_MapRGB(mapInfos->screen->format, 200,150,100);
@@ -66,11 +67,11 @@ int computerSight(struct car_properties *p,
 		fx = x+roundf(bcl*cos);
 		fy = y+roundf(bcl*sin);
 
-                if (
-                fx > mapInfos->mpBg->w ||
-                fy > mapInfos->mpBg->h ||
-                fx < 0 ||
-                fy < 0
+                if (baseColor == black && (
+                        fx > mapInfos->mpBg->w ||
+                        fy > mapInfos->mpBg->h ||
+                        fx < 0 ||
+                        fy < 0)
                 ) {
                         distance = stop-1;
                         break;
@@ -317,7 +318,8 @@ int computerView(int x, int y, float r,
 			mapInfos->mpDecoration,
 			mapInfos->mpRoad,
 			x, y, 
-			baseColor);
+			baseColor,
+                        black);
                 input[i++] = (stop-d)/20;
                 if (baseColor == black) {
                         if (p->trainAi == 1) {

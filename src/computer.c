@@ -237,6 +237,10 @@ void print_output(int *keys, Uint8 *k) {
 }
 
 void press_computer_keys(int *keys, struct ai_key_output* output, float *input, int offroad, double speed) {
+        if (output->ann_fw == NULL) {
+                return;
+        }
+
         float *output_fw, *output_bw, *output_right, *output_left;
         output_fw = fann_run(output->ann_fw, input);
         output_bw = fann_run(output->ann_bw, input);
@@ -626,10 +630,6 @@ int computerView(int x, int y, float r,
                         }
                 }
 
-                if (mapInfos->drivingdata->offroad->ann_fw == NULL) {
-                        return ret;
-                }
-                 
                 struct ai_key_output* ai_keys = NULL;
                 int offroad = 0;
                 if (black == baseColor) {
@@ -637,6 +637,10 @@ int computerView(int x, int y, float r,
                         ai_keys = mapInfos->drivingdata->offroad;
                 } else {
                         ai_keys = mapInfos->drivingdata->road;
+                }
+
+                if (ai_keys == NULL) {
+                        return ret;
                 }
 
                 press_computer_keys(p->k.keys, ai_keys, input, offroad, p->speed);

@@ -236,6 +236,69 @@ void print_output(int *keys, Uint8 *k) {
         );
 }
 
+void press_computer_keys(int *keys, struct ai_key_output* output, float *input, int offroad, double speed) {
+        float *output_fw, *output_bw, *output_right, *output_left;
+        output_fw = fann_run(output->ann_fw, input);
+        output_bw = fann_run(output->ann_bw, input);
+        output_right = fann_run(output->ann_right, input);
+        output_left = fann_run(output->ann_left, input);
+        if (output_fw == NULL || output_bw == NULL || output_right == NULL || output_left == NULL) {
+                return;
+        }
+
+        int moveup = 0, movedown = 0, moveright = 0, moveleft = 0;
+
+        moveup = (int)roundf(*output_fw);
+        movedown = (int)roundf(*output_bw);
+
+        if (*output_fw > *output_bw) {
+                movedown = 0;
+        } else {
+                moveup = 0;
+        }
+
+        moveright = (int)roundf(*output_right);
+        moveleft = (int)roundf(*output_left);
+
+        if (*output_right > *output_left) {
+                moveleft = 0;
+        } else if (*output_left > *output_right) {
+                moveright = 0;
+        }
+
+        if (moveright == 1 && moveleft == 1) {
+                moveright = 0;
+                moveleft = 0;
+        } else if (moveright == 0 && moveleft == 0) {
+                if (*output_right > 0.3) {
+                        moveright = 1;
+                } else if (*output_left > 0.3) {
+                        moveleft = 1;
+                }
+        }
+
+        if (moveup == 1 && movedown == 1) {
+                moveup = 0;
+        }
+
+        if (moveright == 0 && moveleft == 0 && moveup == 0 && movedown == 0 && speed < 1) {
+                moveup = 1;
+        }
+
+        if (offroad == 0) {
+                if (speed < 1) {
+                        moveup = 1;
+                        moveleft = 0;
+                        moveright = 0;
+                }
+        }
+
+        keys[KEY_MOVEUP] = moveup;
+        keys[KEY_MOVEDOWN] = movedown;
+        keys[KEY_MOVERIGHT] = moveright;
+        keys[KEY_MOVELEFT] = moveleft;
+}
+
 /* -------------------------|
  * Intelligence Artificielle| 
  * -------------------------|
@@ -567,75 +630,16 @@ int computerView(int x, int y, float r,
                         return ret;
                 }
                  
-                 float *output_fw, *output_bw, *output_right, *output_left;
-                 if (black == baseColor) {
-                         output_fw = fann_run(mapInfos->drivingdata->offroad->ann_fw, input);
-                         output_bw = fann_run(mapInfos->drivingdata->offroad->ann_bw, input);
-                         output_right = fann_run(mapInfos->drivingdata->offroad->ann_right, input);
-                         output_left = fann_run(mapInfos->drivingdata->offroad->ann_left, input);
-                 } else {
-                         output_fw = fann_run(mapInfos->drivingdata->road->ann_fw, input);
-                         output_bw = fann_run(mapInfos->drivingdata->road->ann_bw, input);
-                         output_right = fann_run(mapInfos->drivingdata->road->ann_right, input);
-                         output_left = fann_run(mapInfos->drivingdata->road->ann_left, input);
-                 }
-
-                 if (output_fw == NULL || output_bw == NULL || output_right == NULL || output_left == NULL) {
-                         return ret;
-                 }
-
-                 int moveup = 0, movedown = 0, moveright = 0, moveleft = 0;
-                 
-                 moveup = (int)roundf(*output_fw);
-                 movedown = (int)roundf(*output_bw);
-
-                 if (*output_fw > *output_bw) {
-                         movedown = 0;
-                 } else {
-                         moveup = 0;
-                 }
-
-                 moveright = (int)roundf(*output_right);
-                 moveleft = (int)roundf(*output_left);
- 
-                 if (*output_right > *output_left) {
-                         moveleft = 0;
-                 } else if (*output_left > *output_right) {
-                         moveright = 0;
-                 }
-
-                if (moveright == 1 && moveleft == 1) {
-                        moveright = 0;
-                        moveleft = 0;
-                } else if (moveright == 0 && moveleft == 0) {
-                        if (*output_right > 0.3) {
-                                moveright = 1;
-                        } else if (*output_left > 0.3) {
-                                moveleft = 1;
-                        }
-                }
-                
-                if (moveup == 1 && movedown == 1) {
-                        moveup = 0;
+                struct ai_key_output* ai_keys = NULL;
+                int offroad = 0;
+                if (black == baseColor) {
+                        offroad = 1;
+                        ai_keys = mapInfos->drivingdata->offroad;
+                } else {
+                        ai_keys = mapInfos->drivingdata->road;
                 }
 
-                if (moveright == 0 && moveleft == 0 && moveup == 0 && movedown == 0 && p->speed < 1) {
-                        moveup = 1;
-                }
-                
-                if (baseColor != black) {
-                if (p->speed < 1) {
-                        moveup = 1;
-                        moveleft = 0;
-                        moveright = 0;
-                }
-                }
-
-                p->k.keys[KEY_MOVEUP] = moveup;
-                p->k.keys[KEY_MOVEDOWN] = movedown;
-                p->k.keys[KEY_MOVERIGHT] = moveright;
-                p->k.keys[KEY_MOVELEFT] = moveleft;
-                
+                press_computer_keys(p->k.keys, ai_keys, input, offroad, p->speed);
         }
 
         return ret;

@@ -8,6 +8,7 @@
 #include "config.h"
 
 #include "init.h"
+#include "start.h"
 #include "custom.h"
 #include "mapdesigned.h"
 #include "image.h"
@@ -25,9 +26,6 @@
 #include "checkpoints.h"
 #include "define.h"
 #include "computer.h"
-
-#define MAP_STATIC_COLLISION DATA_DIR"/maps/static/%s_collision.png"
-#define MAP_STATIC_ROAD DATA_DIR"/maps/static/%s_road.png"
 
 int init_load_game_data(
 	SDL_Surface *screen, 

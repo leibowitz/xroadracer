@@ -1,6 +1,9 @@
 #ifndef __START_H__
 #define __START_H__
 
+#define MAP_STATIC_COLLISION DATA_DIR"/maps/static/%s_collision.png"
+#define MAP_STATIC_ROAD DATA_DIR"/maps/static/%s_road.png"
+
 #include "SDL/SDL.h"
 #include "SDL/SDL_ttf.h"
 #include "map_struct.h"

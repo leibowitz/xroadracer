@@ -14,7 +14,7 @@
 #custom.c editor.c fill.c hud.c image.c \
 #init.c input.c key.c load.c main.c mapdesigned.c \
 #mask.c menu.c offset.c pixel.c primitive.c read.c \
-#show.c start.c text.c time.c computer.c
+#show.c start.c text.c time.c computer.c points.c
 #Xroadracer_LDADD = 
 #Xroadracer_LDFLAGS = `sdl-config --cflags --libs` \
 #"-lSDL_ttf \
@@ -52,7 +52,8 @@
 #	start.c \
 #	text.c \
 #	time.c \
-#	computer.c
+#	computer.c \
+#	points.c
 
 bin_PROGRAMS = jola
 jola_SOURCES = angular.c checkpoints.c fill.c input.c mask.c read.c calcul.c collision.c hud.c key.c menu.c show.c car.c computer.c load.c offset.c start.c carlist.c custom.c image.c main.c pixel.c text.c car_move.c editor.c init.c mapdesigned.c primitive.c time.c \

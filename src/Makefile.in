@@ -29,7 +29,7 @@
 #custom.c editor.c fill.c hud.c image.c \
 #init.c input.c key.c load.c main.c mapdesigned.c \
 #mask.c menu.c offset.c pixel.c primitive.c read.c \
-#show.c start.c text.c time.c computer.c
+#show.c start.c text.c time.c computer.c points.c
 #Xroadracer_LDADD = 
 #Xroadracer_LDFLAGS = `sdl-config --cflags --libs` \
 #"-lSDL_ttf \
@@ -67,7 +67,8 @@
 #	start.c \
 #	text.c \
 #	time.c \
-#	computer.c
+#	computer.c \
+#	points.c
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -198,7 +199,7 @@ am_jola_OBJECTS = angular.$(OBJEXT) checkpoints.$(OBJEXT) fill.$(OBJEXT) \
 	custom.$(OBJEXT) image.$(OBJEXT) main.$(OBJEXT) pixel.$(OBJEXT) \
 	text.$(OBJEXT) car_move.$(OBJEXT) editor.$(OBJEXT) \
 	init.$(OBJEXT) mapdesigned.$(OBJEXT) primitive.$(OBJEXT) \
-	time.$(OBJEXT)
+	time.$(OBJEXT) points.$(OBJEXT)
 jola_OBJECTS = $(am_jola_OBJECTS)
 jola_LDADD = $(LDADD)
 jola_DEPENDENCIES =
@@ -221,7 +222,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/pixel.Po ./$(DEPDIR)/primitive.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/read.Po ./$(DEPDIR)/show.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/start.Po ./$(DEPDIR)/text.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/time.Po
+@AMDEP_TRUE@	./$(DEPDIR)/time.Po ./$(DEPDIR)/points.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -302,6 +303,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/start.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/text.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/time.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/points.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \

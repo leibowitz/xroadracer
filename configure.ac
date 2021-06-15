@@ -54,8 +54,9 @@ LIBS="$LIBS $SDL_LIBS"
 AC_CHECK_LIB(SDL_image, IMG_Load,,check_sdl_image="no")
 AC_CHECK_LIB([SDL_ttf], [TTF_OpenFont],,check_sdl_ttf="no")
 AC_CHECK_LIB(SGE, sge_transform, check_sdl_sge="no")
+AC_CHECK_LIB(SDL_gfx, pixelColor, check_sdl_gfx="no")
 
-LIBS="$LIBS -lSDL_image -lSDL_ttf -lSGE -lm"
+LIBS="$LIBS -lSDL_image -lSDL_ttf -lSDL_gfx -lSGE -lm"
 
 
 #INTI_REQUIRED_VERSION=1.0.7

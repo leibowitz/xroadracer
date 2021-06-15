@@ -4010,7 +4010,7 @@ if test $ac_cv_lib_SGE_sge_transform = yes; then
 fi
 
 
-LIBS="$LIBS -lSDL_image -lSDL_ttf -lSGE -lm"
+LIBS="$LIBS -lSDL_image -lSDL_ttf -lSGE -lSDL_gfx -lm"
 
 
 #INTI_REQUIRED_VERSION=1.0.7

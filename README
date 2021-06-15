@@ -13,7 +13,7 @@ utilisant la libraire SDL.
 
 Dépendances requises pour compiler, sous Ubuntu : 
 
-sudo apt-get install build-essential libsdl1.2-dev libsdl-image1.2-dev 
+sudo apt-get install build-essential libsdl1.2-dev libsdl-image1.2-dev libsdl-gfx1.2-dev
 sudo apt-get install libsdl-ttf2.0-dev libsdl-sge-dev
 
 a- Compilation
